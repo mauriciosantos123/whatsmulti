@@ -99,6 +99,7 @@ const Queues = () => {
 		(async () => {
 			setLoading(true);
 			try {
+				//FOI
 				const { data } = await api.get("/queue");
 				dispatch({ type: "LOAD_QUEUES", payload: data });
 

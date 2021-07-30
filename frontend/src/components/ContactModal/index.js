@@ -90,6 +90,7 @@ const ContactModal = ({ open, onClose, contactId, initialValues, onSave }) => {
 			if (!contactId) return;
 
 			try {
+				//FOI
 				const { data } = await api.get(`/contacts/${contactId}`);
 				if (isMounted.current) {
 					setContact(data);
@@ -110,6 +111,7 @@ const ContactModal = ({ open, onClose, contactId, initialValues, onSave }) => {
 	const handleSaveContact = async values => {
 		try {
 			if (contactId) {
+				//FOI
 				await api.put(`/contacts/${contactId}`, values);
 				handleClose();
 			} else {

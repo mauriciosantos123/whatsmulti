@@ -76,6 +76,15 @@ const MainListItems = () => {
 				icon={<DashboardOutlinedIcon />}
 			/>
 			<ListItemLink
+				to="/answers"
+				primary={i18n.t("mainDrawer.listItems.answers")}
+				icon={
+					<Badge badgeContent>
+						<SyncAltIcon />
+					</Badge>
+				}
+			/>
+			<ListItemLink
 				to="/connections"
 				primary={i18n.t("mainDrawer.listItems.connections")}
 				icon={

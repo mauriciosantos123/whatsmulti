@@ -121,6 +121,7 @@ const TicketListItem = ({ ticket }) => {
 		if (currTickets !== "0") {
 			setLoading(true);
 			try {
+				//FOI
 				await api.put(`/tickets/accept/${id}`, {
 					status: "open",
 					userId: user?.id,

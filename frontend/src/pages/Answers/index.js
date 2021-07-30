@@ -34,7 +34,7 @@ import Title from "../../components/Title";
 import TableRowSkeleton from "../../components/TableRowSkeleton";
 
 import api from "../../services/api";
-import WhatsAppModal from "../../components/WhatsAppModal";
+import AnswersModal from "../../components/AnswersModal";
 import ConfirmationModal from "../../components/ConfirmationModal";
 import QrcodeModal from "../../components/QrcodeModal";
 import { i18n } from "../../translate/i18n";
@@ -92,11 +92,11 @@ const CustomToolTip = ({ title, content, children }) => {
 	);
 };
 
-const Connections = () => {
+const Answers = () => {
 	const classes = useStyles();
 
-	const { whatsApps, loading } = useContext(WhatsAppsContext);
-	const [whatsAppModalOpen, setWhatsAppModalOpen] = useState(false);
+	const { answers, loading } = useContext(WhatsAppsContext);
+	const [answerModalOpen, setAnswersModalOpen] = useState(false);
 	const [qrModalOpen, setQrModalOpen] = useState(false);
 	const [selectedWhatsApp, setSelectedWhatsApp] = useState(null);
 	const [confirmModalOpen, setConfirmModalOpen] = useState(false);
@@ -104,8 +104,7 @@ const Connections = () => {
 		action: "",
 		title: "",
 		message: "",
-		whatsAppId: "",
-		open: false,
+			open: false,
 	};
 	const [confirmModalInfo, setConfirmModalInfo] = useState(
 		confirmationModalInitialState
@@ -119,24 +118,17 @@ const Connections = () => {
 		}
 	};
 
-	const handleRequestNewQrCode = async whatsAppId => {
-		try {
-			//FOI
-			await api.put(`/whatsappsession/${whatsAppId}`);
-		} catch (err) {
-			toastError(err);
-		}
+	
+
+	const handleOpenAnswersModal = () => {
+		setSelectedWhatsApp(null);
+		setAnswersModalOpen(true);
 	};
 
-	const handleOpenWhatsAppModal = () => {
+	const handleCloseAnswersModal = useCallback(() => {
+		setAnswersModalOpen(false);
 		setSelectedWhatsApp(null);
-		setWhatsAppModalOpen(true);
-	};
-
-	const handleCloseWhatsAppModal = useCallback(() => {
-		setWhatsAppModalOpen(false);
-		setSelectedWhatsApp(null);
-	}, [setSelectedWhatsApp, setWhatsAppModalOpen]);
+	}, [setSelectedWhatsApp, setAnswersModalOpen]);
 
 	const handleOpenQrModal = whatsApp => {
 		setSelectedWhatsApp(whatsApp);
@@ -150,15 +142,15 @@ const Connections = () => {
 
 	const handleEditWhatsApp = whatsApp => {
 		setSelectedWhatsApp(whatsApp);
-		setWhatsAppModalOpen(true);
+		setAnswersModalOpen(true);
 	};
 
 	const handleOpenConfirmationModal = (action, whatsAppId) => {
 		if (action === "disconnect") {
 			setConfirmModalInfo({
 				action: action,
-				title: i18n.t("connections.confirmationModal.disconnectTitle"),
-				message: i18n.t("connections.confirmationModal.disconnectMessage"),
+				title: i18n.t("answers.confirmationModal.disconnectTitle"),
+				message: i18n.t("answers.confirmationModal.disconnectMessage"),
 				whatsAppId: whatsAppId,
 			});
 		}
@@ -166,8 +158,8 @@ const Connections = () => {
 		if (action === "delete") {
 			setConfirmModalInfo({
 				action: action,
-				title: i18n.t("connections.confirmationModal.deleteTitle"),
-				message: i18n.t("connections.confirmationModal.deleteMessage"),
+				title: i18n.t("answers.confirmationModal.deleteTitle"),
+				message: i18n.t("answers.confirmationModal.deleteMessage"),
 				whatsAppId: whatsAppId,
 			});
 		}
@@ -186,7 +178,7 @@ const Connections = () => {
 		if (confirmModalInfo.action === "delete") {
 			try {
 				await api.delete(`/whatsapp/${confirmModalInfo.whatsAppId}`);
-				toast.success(i18n.t("connections.toasts.deleted"));
+				toast.success(i18n.t("answers.toasts.deleted"));
 			} catch (err) {
 				toastError(err);
 			}
@@ -205,29 +197,10 @@ const Connections = () => {
 						color="primary"
 						onClick={() => handleOpenQrModal(whatsApp)}
 					>
-						{i18n.t("connections.buttons.qrcode")}
+						{i18n.t("answers.buttons.qrcode")}
 					</Button>
 				)}
-				{whatsApp.status === "DISCONNECTED" && (
-					<>
-						<Button
-							size="small"
-							variant="outlined"
-							color="primary"
-							onClick={() => handleStartWhatsAppSession(whatsApp.id)}
-						>
-							{i18n.t("connections.buttons.tryAgain")}
-						</Button>{" "}
-						<Button
-							size="small"
-							variant="outlined"
-							color="secondary"
-							onClick={() => handleRequestNewQrCode(whatsApp.id)}
-						>
-							{i18n.t("connections.buttons.newQr")}
-						</Button>
-					</>
-				)}
+	
 				{(whatsApp.status === "CONNECTED" ||
 					whatsApp.status === "PAIRING" ||
 					whatsApp.status === "TIMEOUT") && (
@@ -239,12 +212,12 @@ const Connections = () => {
 							handleOpenConfirmationModal("disconnect", whatsApp.id);
 						}}
 					>
-						{i18n.t("connections.buttons.disconnect")}
+						{i18n.t("answers.buttons.disconnect")}
 					</Button>
 				)}
 				{whatsApp.status === "OPENING" && (
 					<Button size="small" variant="outlined" disabled color="default">
-						{i18n.t("connections.buttons.connecting")}
+						{i18n.t("answers.buttons.connecting")}
 					</Button>
 				)}
 			</>
@@ -256,8 +229,8 @@ const Connections = () => {
 			<div className={classes.customTableCell}>
 				{whatsApp.status === "DISCONNECTED" && (
 					<CustomToolTip
-						title={i18n.t("connections.toolTips.disconnected.title")}
-						content={i18n.t("connections.toolTips.disconnected.content")}
+						title={i18n.t("answers.toolTips.disconnected.title")}
+						content={i18n.t("answers.toolTips.disconnected.content")}
 					>
 						<SignalCellularConnectedNoInternet0Bar color="secondary" />
 					</CustomToolTip>
@@ -267,21 +240,21 @@ const Connections = () => {
 				)}
 				{whatsApp.status === "qrcode" && (
 					<CustomToolTip
-						title={i18n.t("connections.toolTips.qrcode.title")}
-						content={i18n.t("connections.toolTips.qrcode.content")}
+						title={i18n.t("answers.toolTips.qrcode.title")}
+						content={i18n.t("answers.toolTips.qrcode.content")}
 					>
 						<CropFree />
 					</CustomToolTip>
 				)}
 				{whatsApp.status === "CONNECTED" && (
-					<CustomToolTip title={i18n.t("connections.toolTips.connected.title")}>
+					<CustomToolTip title={i18n.t("answers.toolTips.connected.title")}>
 						<SignalCellular4Bar style={{ color: green[500] }} />
 					</CustomToolTip>
 				)}
 				{(whatsApp.status === "TIMEOUT" || whatsApp.status === "PAIRING") && (
 					<CustomToolTip
-						title={i18n.t("connections.toolTips.timeout.title")}
-						content={i18n.t("connections.toolTips.timeout.content")}
+						title={i18n.t("answers.toolTips.timeout.title")}
+						content={i18n.t("answers.toolTips.timeout.content")}
 					>
 						<SignalCellularConnectedNoInternet2Bar color="secondary" />
 					</CustomToolTip>
@@ -303,22 +276,22 @@ const Connections = () => {
 			<QrcodeModal
 				open={qrModalOpen}
 				onClose={handleCloseQrModal}
-				whatsAppId={!whatsAppModalOpen && selectedWhatsApp?.id}
+				whatsAppId={!answerModalOpen && selectedWhatsApp?.id}
 			/>
-			<WhatsAppModal
-				open={whatsAppModalOpen}
-				onClose={handleCloseWhatsAppModal}
+			<AnswersModal
+				open={answerModalOpen}
+				onClose={handleCloseAnswersModal}
 				whatsAppId={!qrModalOpen && selectedWhatsApp?.id}
 			/>
 			<MainHeader>
-				<Title>{i18n.t("connections.title")}</Title>
+				<Title>{i18n.t("answers.title")}</Title>
 				<MainHeaderButtonsWrapper>
 					<Button
 						variant="contained"
 						color="primary"
-						onClick={handleOpenWhatsAppModal}
+						onClick={handleOpenAnswersModal}
 					>
-						{i18n.t("connections.buttons.add")}
+						{i18n.t("answers.buttons.add")}
 					</Button>
 				</MainHeaderButtonsWrapper>
 			</MainHeader>
@@ -327,22 +300,18 @@ const Connections = () => {
 					<TableHead>
 						<TableRow>
 							<TableCell align="center">
-								{i18n.t("connections.table.name")}
+								{i18n.t("answers.table.name")}
 							</TableCell>
 							<TableCell align="center">
-								{i18n.t("connections.table.status")}
+								{i18n.t("answers.table.desc")}
 							</TableCell>
+				
 							<TableCell align="center">
-								{i18n.t("connections.table.session")}
+								{i18n.t("answers.table.lastUpdate")}
 							</TableCell>
+				
 							<TableCell align="center">
-								{i18n.t("connections.table.lastUpdate")}
-							</TableCell>
-							<TableCell align="center">
-								{i18n.t("connections.table.default")}
-							</TableCell>
-							<TableCell align="center">
-								{i18n.t("connections.table.actions")}
+								{i18n.t("answers.table.actions")}
 							</TableCell>
 						</TableRow>
 					</TableHead>
@@ -351,30 +320,21 @@ const Connections = () => {
 							<TableRowSkeleton />
 						) : (
 							<>
-								{whatsApps?.length > 0 &&
-									whatsApps.map(whatsApp => (
-										<TableRow key={whatsApp.id}>
-											<TableCell align="center">{whatsApp.name}</TableCell>
+								{answers?.length > 0 &&
+									answers.map(answers => (
+										<TableRow key={answers.id}>
+											<TableCell align="center">{answers.name}</TableCell>
 											<TableCell align="center">
-												{renderStatusToolTips(whatsApp)}
+												{renderStatusToolTips(answers)}
 											</TableCell>
-											<TableCell align="center">
-												{renderActionButtons(whatsApp)}
+												<TableCell align="center">
+												{format(parseISO(answers.updatedAt), "dd/MM/yy HH:mm")}
 											</TableCell>
-											<TableCell align="center">
-												{format(parseISO(whatsApp.updatedAt), "dd/MM/yy HH:mm")}
-											</TableCell>
-											<TableCell align="center">
-												{whatsApp.isDefault && (
-													<div className={classes.customTableCell}>
-														<CheckCircle style={{ color: green[500] }} />
-													</div>
-												)}
-											</TableCell>
+	
 											<TableCell align="center">
 												<IconButton
 													size="small"
-													onClick={() => handleEditWhatsApp(whatsApp)}
+													onClick={() => handleEditWhatsApp(answers)}
 												>
 													<Edit />
 												</IconButton>
@@ -382,7 +342,7 @@ const Connections = () => {
 												<IconButton
 													size="small"
 													onClick={e => {
-														handleOpenConfirmationModal("delete", whatsApp.id);
+														handleOpenConfirmationModal("delete", answers.id);
 													}}
 												>
 													<DeleteOutline />
@@ -399,4 +359,4 @@ const Connections = () => {
 	);
 };
 
-export default Connections;
+export default Answers;

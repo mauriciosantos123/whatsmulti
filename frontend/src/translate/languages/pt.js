@@ -40,6 +40,14 @@ const messages = {
 					},
 				},
 			},
+			answers: {
+				charts: {
+					perDay: {
+						title: "Respostas: ",
+					},
+				},
+			},
+
 			connections: {
 				title: "Conexões",
 				toasts: {
@@ -90,6 +98,56 @@ const messages = {
 					session: "Sessão",
 				},
 			},
+			answers: {
+				title: "Respostas",
+				toasts: {
+					deleted: "Conexão com o WhatsApp excluída com sucesso!",
+				},
+				confirmationModal: {
+					deleteTitle: "Deletar",
+					deleteMessage:
+						"Você tem certeza? Essa ação não pode ser revertida.",
+					disconnectTitle: "Desconectar",
+					disconnectMessage:
+						"Tem certeza? Você precisará ler o QR Code novamente.",
+				},
+				buttons: {
+					add: "Adicionar Resposta",
+					disconnect: "desconectar",
+					tryAgain: "Tentar novamente",
+					qrcode: "QR CODE",
+					newQr: "Novo QR CODE",
+					connecting: "Conectando",
+				},
+				toolTips: {
+					disconnected: {
+						title: "Falha ao iniciar sessão do WhatsApp",
+						content:
+							"Certifique-se de que seu celular esteja conectado à internet e tente novamente, ou solicite um novo QR Code",
+					},
+					qrcode: {
+						title: "Esperando leitura do QR Code",
+						content:
+							"Clique no botão 'QR CODE' e leia o QR Code com o seu celular para iniciar a sessão",
+					},
+					connected: {
+						title: "Conexão estabelecida!",
+					},
+					timeout: {
+						title: "A conexão com o celular foi perdida",
+						content:
+							"Certifique-se de que seu celular esteja conectado à internet e o WhatsApp esteja aberto, ou clique no botão 'Desconectar' para obter um novo QR Code",
+					},
+				},
+				table: {
+					name: "Nome",
+					desc: "Resposta",
+					lastUpdate: "Última atualização",
+					default: "Padrão",
+					actions: "Ações",
+					
+				},
+			},			
 			whatsappModal: {
 				title: {
 					add: "Adicionar WhatsApp",
@@ -106,6 +164,22 @@ const messages = {
 				},
 				success: "WhatsApp salvo com sucesso.",
 			},
+			answerModal: {
+				title: {
+					add: "Adicionar Resposta",
+					edit: "Editar Resposta",
+				},
+				form: {
+					name: "Nome",
+					default: "Padrão",
+				},
+				buttons: {
+					okAdd: "Adicionar",
+					okEdit: "Salvar",
+					cancel: "Cancelar",
+				},
+				success: "Resaposta salva com sucesso.",
+			},			
 			qrCode: {
 				message: "Leia o QrCode para iniciar a sessão",
 			},
@@ -179,6 +253,7 @@ const messages = {
 				},
 				form: {
 					name: "Nome",
+					peso: "Peso",
 					email: "Email",
 					password: "Senha",
 					profile: "Perfil",
@@ -253,6 +328,7 @@ const messages = {
 				listItems: {
 					dashboard: "Dashboard",
 					connections: "Conexões",
+					answers:"Respostas",
 					tickets: "Tickets",
 					contacts: "Contatos",
 					queues: "Filas",

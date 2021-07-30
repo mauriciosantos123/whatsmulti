@@ -40,6 +40,13 @@ const messages = {
 					},
 				},
 			},
+			answers: {
+				charts: {
+					perDay: {
+						title: "Answers: ",
+					},
+				},
+			},
 			connections: {
 				title: "Connections",
 				toasts: {

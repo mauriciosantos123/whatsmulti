@@ -15,6 +15,7 @@ const QrcodeModal = ({ open, onClose, whatsAppId }) => {
 			if (!whatsAppId) return;
 
 			try {
+				//FOI
 				const { data } = await api.get(`/whatsapp/${whatsAppId}`);
 				setQrCode(data.qrcode);
 			} catch (err) {

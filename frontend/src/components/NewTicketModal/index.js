@@ -44,6 +44,7 @@ const NewTicketModal = ({ modalOpen, onClose }) => {
 		const delayDebounceFn = setTimeout(() => {
 			const fetchContacts = async () => {
 				try {
+					//FOI
 					const { data } = await api.get("contacts", {
 						params: { searchParam },
 					});

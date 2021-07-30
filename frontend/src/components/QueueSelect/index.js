@@ -26,6 +26,7 @@ const QueueSelect = ({ selectedQueueIds, onChange }) => {
 	useEffect(() => {
 		(async () => {
 			try {
+				//FOI
 				const { data } = await api.get("/queue");
 				setQueues(data);
 			} catch (err) {

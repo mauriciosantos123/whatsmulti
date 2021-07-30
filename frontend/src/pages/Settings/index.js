@@ -41,6 +41,7 @@ const Settings = () => {
 	useEffect(() => {
 		const fetchSession = async () => {
 			try {
+				//FOI
 				const { data } = await api.get("/settings");
 				setSettings(data);
 			} catch (err) {
@@ -74,6 +75,7 @@ const Settings = () => {
 		const settingKey = e.target.name;
 
 		try {
+			//FOI
 			await api.put(`/settings/${settingKey}`, {
 				value: selectedValue,
 			});

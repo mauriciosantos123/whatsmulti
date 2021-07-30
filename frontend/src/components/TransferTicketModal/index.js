@@ -38,6 +38,7 @@ const TransferTicketModal = ({ modalOpen, onClose, ticketid }) => {
 		const delayDebounceFn = setTimeout(() => {
 			const fetchUsers = async () => {
 				try {
+					//FOI
 					const { data } = await api.get("/users/", {
 						params: { searchParam },
 					});
@@ -65,6 +66,7 @@ const TransferTicketModal = ({ modalOpen, onClose, ticketid }) => {
 		if (!ticketid || !selectedUser) return;
 		setLoading(true);
 		try {
+			//ROTA
 			await api.put(`/tickets/${ticketid}`, {
 				userId: selectedUser.id,
 				queueId: null,

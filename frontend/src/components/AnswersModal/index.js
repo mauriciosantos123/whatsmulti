@@ -21,7 +21,6 @@ import {
 import api from "../../services/api";
 import { i18n } from "../../translate/i18n";
 import toastError from "../../errors/toastError";
-import QueueSelect from "../QueueSelect";
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -57,45 +56,41 @@ const SessionSchema = Yup.object().shape({
 		.required("Required"),
 });
 
-const WhatsAppModal = ({ open, onClose, whatsAppId }) => {
+const AnswersModal = ({ open, onClose, answerId }) => {
 	const classes = useStyles();
 	const initialState = {
 		name: "",
-		greetingMessage: "",
-		isDefault: false,
+		response: "",
 	};
-	const [whatsApp, setWhatsApp] = useState(initialState);
-	const [selectedQueueIds, setSelectedQueueIds] = useState([]);
+	const [whatsApp, setWhatsApp] = useState(initialState);	
 
 	useEffect(() => {
 		const fetchSession = async () => {
-			if (!whatsAppId) return;
+			if (!answerId) return;
 
 			try {
 				//FOI
-				const { data } = await api.get(`whatsapp/${whatsAppId}`);
+				const { data } = await api.get(`answers/${answerId}`);
 				setWhatsApp(data);
-
-				const whatsQueueIds = data.queues?.map(queue => queue.id);
-				setSelectedQueueIds(whatsQueueIds);
+				
 			} catch (err) {
 				toastError(err);
 			}
 		};
 		fetchSession();
-	}, [whatsAppId]);
+	}, [answerId]);
 
 	const handleSaveWhatsApp = async values => {
-		const whatsappData = { ...values, queueIds: selectedQueueIds };
+		const answersData = { ...values };
 
 		try {
-			if (whatsAppId) {
+			if (answerId) {
 				//FOI
-				await api.put(`/whatsapp/${whatsAppId}`, whatsappData);
+				await api.put(`/answers/${answerId}`, answersData);
 			} else {
-				await api.post("/whatsapp", whatsappData);
+				await api.post("/answers", answersData);
 			}
-			toast.success(i18n.t("whatsappModal.success"));
+			toast.success(i18n.t("answerModal.success"));
 			handleClose();
 		} catch (err) {
 			toastError(err);
@@ -117,9 +112,9 @@ const WhatsAppModal = ({ open, onClose, whatsAppId }) => {
 				scroll="paper"
 			>
 				<DialogTitle>
-					{whatsAppId
-						? i18n.t("whatsappModal.title.edit")
-						: i18n.t("whatsappModal.title.add")}
+					{answerId
+						? i18n.t("answerModal.title.edit")
+						: i18n.t("answerModal.title.add")}
 				</DialogTitle>
 				<Formik
 					initialValues={whatsApp}
@@ -138,7 +133,7 @@ const WhatsAppModal = ({ open, onClose, whatsAppId }) => {
 								<div className={classes.multFieldLine}>
 									<Field
 										as={TextField}
-										label={i18n.t("whatsappModal.form.name")}
+										label={i18n.t("answerModal.form.name")}
 										autoFocus
 										name="name"
 										error={touched.name && Boolean(errors.name)}
@@ -146,30 +141,20 @@ const WhatsAppModal = ({ open, onClose, whatsAppId }) => {
 										variant="outlined"
 										margin="dense"
 										className={classes.textField}
-									/>
-									<FormControlLabel
-										control={
-											<Field
-												as={Switch}
-												color="primary"
-												name="isDefault"
-												checked={values.isDefault}
-											/>
-										}
-										label={i18n.t("whatsappModal.form.default")}
+										fullWidth
 									/>
 								</div>
 								<div>
 									<Field
 										as={TextField}
-										label={i18n.t("queueModal.form.greetingMessage")}
+										label={i18n.t("queueModal.form.response")}
 										type="greetingMessage"
 										multiline
 										rows={5}
 										fullWidth
-										name="greetingMessage"
+										name="response"
 										error={
-											touched.greetingMessage && Boolean(errors.greetingMessage)
+											touched.response && Boolean(errors.response)
 										}
 										helperText={
 											touched.greetingMessage && errors.greetingMessage
@@ -178,10 +163,6 @@ const WhatsAppModal = ({ open, onClose, whatsAppId }) => {
 										margin="dense"
 									/>
 								</div>
-								<QueueSelect
-									selectedQueueIds={selectedQueueIds}
-									onChange={selectedIds => setSelectedQueueIds(selectedIds)}
-								/>
 							</DialogContent>
 							<DialogActions>
 								<Button
@@ -190,7 +171,7 @@ const WhatsAppModal = ({ open, onClose, whatsAppId }) => {
 									disabled={isSubmitting}
 									variant="outlined"
 								>
-									{i18n.t("whatsappModal.buttons.cancel")}
+									{i18n.t("answerModal.buttons.cancel")}
 								</Button>
 								<Button
 									type="submit"
@@ -199,9 +180,9 @@ const WhatsAppModal = ({ open, onClose, whatsAppId }) => {
 									variant="contained"
 									className={classes.btnWrapper}
 								>
-									{whatsAppId
-										? i18n.t("whatsappModal.buttons.okEdit")
-										: i18n.t("whatsappModal.buttons.okAdd")}
+									{answerId
+										? i18n.t("answerModal.buttons.okEdit")
+										: i18n.t("answerModal.buttons.okAdd")}
 									{isSubmitting && (
 										<CircularProgress
 											size={24}
@@ -218,4 +199,4 @@ const WhatsAppModal = ({ open, onClose, whatsAppId }) => {
 	);
 };
 
-export default React.memo(WhatsAppModal);
+export default React.memo(AnswersModal);

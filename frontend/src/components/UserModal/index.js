@@ -72,6 +72,7 @@ const UserModal = ({ open, onClose, userId }) => {
 		name: "",
 		email: "",
 		password: "",
+		peso: "",
 		profile: "user",
 	};
 
@@ -84,6 +85,7 @@ const UserModal = ({ open, onClose, userId }) => {
 		const fetchUser = async () => {
 			if (!userId) return;
 			try {
+				//FOI
 				const { data } = await api.get(`/users/${userId}`);
 				setUser(prevState => {
 					return { ...prevState, ...data };
@@ -107,6 +109,7 @@ const UserModal = ({ open, onClose, userId }) => {
 		const userData = { ...values, queueIds: selectedQueueIds };
 		try {
 			if (userId) {
+				//FOI
 				await api.put(`/users/${userId}`, userData);
 			} else {
 				await api.post("/users", userData);
@@ -158,6 +161,10 @@ const UserModal = ({ open, onClose, userId }) => {
 										margin="dense"
 										fullWidth
 									/>
+						
+								</div>
+								<div className={classes.multFieldLine}>
+
 									<Field
 										as={TextField}
 										label={i18n.t("userModal.form.password")}
@@ -169,7 +176,19 @@ const UserModal = ({ open, onClose, userId }) => {
 										margin="dense"
 										fullWidth
 									/>
+									<Field
+										as={TextField}
+										label={i18n.t("userModal.form.peso")}
+										autoFocus
+										name="Peso"
+										error={touched.peso && Boolean(errors.peso)}
+										helperText={touched.peso && errors.peso}
+										variant="outlined"
+										margin="dense"
+										fullWidth
+									/>
 								</div>
+
 								<div className={classes.multFieldLine}>
 									<Field
 										as={TextField}

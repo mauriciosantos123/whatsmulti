@@ -327,6 +327,7 @@ const MessagesList = ({ ticketId, isGroup }) => {
 		const delayDebounceFn = setTimeout(() => {
 			const fetchMessages = async () => {
 				try {
+					//FOI
 					const { data } = await api.get("/messages/" + ticketId, {
 						params: { pageNumber },
 					});

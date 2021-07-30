@@ -1,0 +1,1 @@
+npx sequelize migration:generate --name AlterUser   #Criar gerar migration node ! 

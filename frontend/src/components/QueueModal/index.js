@@ -80,6 +80,7 @@ const QueueModal = ({ open, onClose, queueId }) => {
 		(async () => {
 			if (!queueId) return;
 			try {
+				//FOI
 				const { data } = await api.get(`/queue/${queueId}`);
 				setQueue(prevState => {
 					return { ...prevState, ...data };
@@ -106,6 +107,7 @@ const QueueModal = ({ open, onClose, queueId }) => {
 	const handleSaveQueue = async values => {
 		try {
 			if (queueId) {
+				//FOI
 				await api.put(`/queue/${queueId}`, values);
 			} else {
 				await api.post("/queue", values);

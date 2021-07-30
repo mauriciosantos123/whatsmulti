@@ -24,6 +24,7 @@ const ModalImageCors = ({ imageUrl }) => {
 	useEffect(() => {
 		if (!imageUrl) return;
 		const fetchImage = async () => {
+			//FOI
 			const { data, headers } = await api.get(imageUrl, {
 				responseType: "blob",
 			});

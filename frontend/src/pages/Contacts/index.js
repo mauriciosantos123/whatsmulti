@@ -114,6 +114,7 @@ const Contacts = () => {
 		const delayDebounceFn = setTimeout(() => {
 			const fetchContacts = async () => {
 				try {
+					//ROTA
 					const { data } = await api.get("/contacts/", {
 						params: { searchParam, pageNumber },
 					});
