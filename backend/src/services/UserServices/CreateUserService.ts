@@ -8,6 +8,7 @@ interface Request {
   email: string;
   password: string;
   name: string;
+  peso: string;
   queueIds?: number[];
   profile?: string;
 }
@@ -15,6 +16,7 @@ interface Request {
 interface Response {
   email: string;
   name: string;
+  peso: string;
   id: number;
   profile: string;
 }
@@ -23,6 +25,7 @@ const CreateUserService = async ({
   email,
   password,
   name,
+  peso,
   queueIds = [],
   profile = "admin"
 }: Request): Promise<Response> => {
@@ -56,6 +59,7 @@ const CreateUserService = async ({
       email,
       password,
       name,
+      peso,
       profile
     },
     { include: ["queues"] }

@@ -1,8 +1,9 @@
+import { unique } from "faker";
 import { QueryInterface, DataTypes } from "sequelize";
 
 module.exports = {
   up: (queryInterface: QueryInterface) => {
-    return queryInterface.createTable("Users", {
+    return queryInterface.createTable("Answers", {
       id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -10,22 +11,13 @@ module.exports = {
         allowNull: false
       },
       name: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      email: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(150),
         allowNull: false,
-        unique: true
+        unique:true
       },
-      peso: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true
-      },
-      passwordHash: {
-        type: DataTypes.STRING,
-        allowNull: false
+      response: {
+        type: DataTypes.TEXT,
+        allowNull: true
       },
       createdAt: {
         type: DataTypes.DATE,
@@ -39,6 +31,6 @@ module.exports = {
   },
 
   down: (queryInterface: QueryInterface) => {
-    return queryInterface.dropTable("Users");
+    return queryInterface.dropTable("Answers");
   }
 };

@@ -5,6 +5,7 @@ interface SerializedUser {
   id: number;
   name: string;
   email: string;
+  peso: string;
   profile: string;
   queues: Queue[];
 }
@@ -14,6 +15,7 @@ export const SerializeUser = (user: User): SerializedUser => {
     id: user.id,
     name: user.name,
     email: user.email,
+    peso: user.peso,
     profile: user.profile,
     queues: user.queues
   };
