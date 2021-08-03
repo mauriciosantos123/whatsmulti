@@ -5,7 +5,7 @@ interface SerializedUser {
   id: number;
   name: string;
   email: string;
-  peso: string;
+  transfer_level: string;
   profile: string;
   queues: Queue[];
 }
@@ -15,7 +15,7 @@ export const SerializeUser = (user: User): SerializedUser => {
     id: user.id,
     name: user.name,
     email: user.email,
-    peso: user.peso,
+    transfer_level: user.transfer_level,
     profile: user.profile,
     queues: user.queues
   };

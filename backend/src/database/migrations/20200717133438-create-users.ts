@@ -18,7 +18,7 @@ module.exports = {
         allowNull: false,
         unique: true
       },
-      peso: {
+      transfer_level: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true

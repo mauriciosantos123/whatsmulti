@@ -32,7 +32,7 @@ class User extends Model<User> {
   email: string;
 
   @Column
-  peso: string;
+  transfer_levels: string;
 
   @Column(DataType.VIRTUAL)
   password: string;
