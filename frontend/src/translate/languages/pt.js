@@ -253,7 +253,7 @@ const messages = {
 				},
 				form: {
 					name: "Nome",
-					peso: "Peso",
+					transfer_level: "Peso",
 					email: "Email",
 					password: "Senha",
 					profile: "Perfil",
@@ -372,6 +372,7 @@ const messages = {
 					name: "Nome",
 					email: "Email",
 					profile: "Perfil",
+					transfer_level: "Peso",
 					actions: "Ações",
 				},
 				buttons: {

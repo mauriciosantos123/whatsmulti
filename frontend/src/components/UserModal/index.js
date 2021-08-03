@@ -72,7 +72,7 @@ const UserModal = ({ open, onClose, userId }) => {
 		name: "",
 		email: "",
 		password: "",
-		peso: "",
+		transfer_level: "",
 		profile: "user",
 	};
 
@@ -178,11 +178,11 @@ const UserModal = ({ open, onClose, userId }) => {
 									/>
 									<Field
 										as={TextField}
-										label={i18n.t("userModal.form.peso")}
+										label={i18n.t("userModal.form.transfer_level")}
 										autoFocus
-										name="Peso"
-										error={touched.peso && Boolean(errors.peso)}
-										helperText={touched.peso && errors.peso}
+										name="transfer_level"
+										error={touched.transfer_level && Boolean(errors.transfer_level)}
+										helperText={touched.transfer_level && errors.transfer_level}
 										variant="outlined"
 										margin="dense"
 										fullWidth

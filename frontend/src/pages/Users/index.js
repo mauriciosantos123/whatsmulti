@@ -242,6 +242,9 @@ const Users = () => {
 								{i18n.t("users.table.email")}
 							</TableCell>
 							<TableCell align="center">
+								{i18n.t("users.table.transfer_level")}
+							</TableCell>
+							<TableCell align="center">
 								{i18n.t("users.table.profile")}
 							</TableCell>
 							<TableCell align="center">
@@ -255,6 +258,7 @@ const Users = () => {
 								<TableRow key={user.id}>
 									<TableCell align="center">{user.name}</TableCell>
 									<TableCell align="center">{user.email}</TableCell>
+									<TableCell align="center">{user.transfer_level}</TableCell>
 									<TableCell align="center">{user.profile}</TableCell>
 									<TableCell align="center">
 										<IconButton
