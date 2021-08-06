@@ -9,6 +9,7 @@ import Divider from "@material-ui/core/Divider";
 import { Badge } from "@material-ui/core";
 import DashboardOutlinedIcon from "@material-ui/icons/DashboardOutlined";
 import WhatsAppIcon from "@material-ui/icons/WhatsApp";
+import DraftsIcon from '@material-ui/icons/Drafts';
 import SyncAltIcon from "@material-ui/icons/SyncAlt";
 import SettingsOutlinedIcon from "@material-ui/icons/SettingsOutlined";
 import PeopleAltOutlinedIcon from "@material-ui/icons/PeopleAltOutlined";
@@ -78,11 +79,8 @@ const MainListItems = () => {
 			<ListItemLink
 				to="/answers"
 				primary={i18n.t("mainDrawer.listItems.answers")}
-				icon={
-					<Badge badgeContent>
-						<SyncAltIcon />
-					</Badge>
-				}
+				icon={<DraftsIcon />}
+
 			/>
 			<ListItemLink
 				to="/connections"
